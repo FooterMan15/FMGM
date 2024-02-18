@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "fmgm:blocks/crude_steel_block"
+  }
+}

@@ -1,0 +1,128 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.21'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.21'
+}
+
+version = '1.0.0'
+group = 'footer.fmgm'
+archivesBaseName = 'fmgm'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println ("Java: ${System.getProperty('java.version')}, JVM: ${System.getProperty('java.vm.version')} (${System.getProperty('java.vendor')}), Arch: ${System.getProperty('os.arch')}")
+minecraft {
+    mappings channel: 'official', version: '1.19.2'
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'fmgm'
+
+            mods {
+                fmgm {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run/server')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'fmgm'
+
+            mods {
+                fmgm {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        gameTestServer {
+            workingDirectory project.file('run/server')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'fmgm'
+
+            mods {
+                fmgm {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'fmgm', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
+
+            mods {
+                fmgm {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDirs 'src/generated/resources/' }
+
+repositories {
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        content { includeGroup "thedarkcolour" }
+    }
+    exclusiveContent {
+        forRepository {
+            maven { url = "https://api.modrinth.com/maven"  }
+        }
+        forRepositories(fg.repository)
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+    maven {
+        url "https://maven.resourcefulbees.com/repository/maven-public/"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.19.2-43.2.3'
+
+    implementation 'thedarkcolour:kotlinforforge:3.12.0'
+    runtimeOnly "maven.modrinth:jade:${jade_ver}"
+    implementation ("earth.terrarium:botarium-forge-${mc_ver}:${botarium_ver}")
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "17"
+}
+
+jar {
+    manifest {
+        attributes([
+                'Specification-Title': "fmgm",
+                'Specification-Vendor': "fmgm",
+                'Specification-Version': "1",
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Implementation-Vendor' :"fmgm",
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

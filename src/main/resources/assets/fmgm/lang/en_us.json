@@ -1,0 +1,10 @@
+{
+  "itemGroup.fmgm_blocks": "General Machinery: Blocks",
+  "itemGroup.fmgm_items": "General Machinery: Items",
+
+  "item.fmgm.crude_steel_ingot": "Crude Steel",
+  "item.fmgm.steel_ingot": "Steel",
+
+  "block.fmgm.steel_block": "Block of Steel",
+  "block.fmgm.crude_steel_block": "Block of Crude Steel"
+}

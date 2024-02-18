@@ -1,0 +1,25 @@
+modLoader="kotlinforforge"
+loaderVersion="[3,)"
+license='LGPL'
+
+[[mods]]
+modId="fmgm"
+version="${file.jarVersion}"
+displayName="GeneralMachinery"
+credits="Footer's Mods"
+authors="FooterMan"
+description='''
+General Machinery.
+'''
+[[dependencies.fmgm]]
+    modId="forge"
+    mandatory=true
+    versionRange="[41,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.fmgm]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,1.20)"
+    ordering="NONE"
+    side="BOTH"
